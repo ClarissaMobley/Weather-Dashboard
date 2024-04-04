@@ -20,10 +20,16 @@ body {
     background: linear-gradient(to left, var(--top-color), #465ab8);
 }
 
-.col-lg-3 {
+/* .col-lg-3 {
     border: 3px solid #000000;
-}
+} */
 
 .btn {
     background-color: var(--search-button);
+}
+
+#border-line{
+    margin-top: 15px;
+    height: 2px;
+    background-color: var(--city-button);
 }
