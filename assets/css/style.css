@@ -2,8 +2,24 @@
 :root {
     --primary: #ffffff;
     --secondary: #000000;
-    --top-color: #2e2576;
+    --top-color: #261360;
     --search-button: #6991e3;
     --city-button: #aeaeae;
     --forecast-card: #323d4f;
+}
+
+body {
+    background-color: var(--primary);
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.weather-header {
+    background: linear-gradient(to left, var(--top-color), #465ab8);
+}
+
+.weather-title {
+    color: var(--primary);
+    font-weight: 600;
 }
