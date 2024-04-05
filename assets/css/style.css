@@ -33,3 +33,7 @@ body {
     height: 2px;
     background-color: var(--city-button);
 }
+
+.city-btn {
+    background-color: var(--city-button);
+}
