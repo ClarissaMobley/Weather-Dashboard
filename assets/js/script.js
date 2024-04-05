@@ -6,6 +6,19 @@ const defaultForecast = document.querySelector(".default-forecast");
 const forecastCards = document.querySelectorAll(".forecastCards");
 const apiKey = "530886ee7df4842ed6caba305a22369e";
 
+const searchButtonHandler = function (event) {
+    event.preventDefault();
+  
+    const city = userSearch.value.trim();
+  
+    if (city) {
+      getWeather(city);
+
+      userSearch.value = "";
+    } else {
+      alert("Please enter a city name");
+    }
+  };
 
 
 
