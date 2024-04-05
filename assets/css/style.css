@@ -37,3 +37,9 @@ body {
 .city-btn {
     background-color: var(--city-button);
 }
+
+.current-forecast {
+    border: 1px solid black;
+    height: 200px;
+}
+
