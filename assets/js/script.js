@@ -1,24 +1,27 @@
 const userSearch = document.querySelector("#city-search");
 const searchButton = document.querySelector(".search-btn");
-const cityButton = document.querySelector(".city-btn");
 const currentForecast = document.querySelector(".current-forecast");
-const defaultForecast = document.querySelector(".default-forecast");
-const forecastCards = document.querySelectorAll(".forecastCards");
 const apiKey = "530886ee7df4842ed6caba305a22369e";
 
-const searchButtonHandler = function (event) {
-    event.preventDefault();
-  
-    const city = userSearch.value.trim();
-  
-    if (city) {
-      getWeather(city);
+let currentDate = new Date().toLocaleDateString();
 
-      userSearch.value = "";
+const searchButtonHandler = function(event) {
+    event.preventDefault();
+
+    const city = userSearch.value.trim();
+
+    if (city) {
+        getWeather(city);
     } else {
-      alert("Please enter a city name");
+        alert("Please enter a city name");
     }
-  };
+};
+
+const displayWeather = function(data, city) {
+    currentForecast.innerHTML = `
+        <h1 class="fw-bold">${data.name} (${currentDate})</h1>
+        </br>temp:${data.main.temp}`;
+};
 
 
 
