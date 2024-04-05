@@ -39,3 +39,8 @@ body {
     height: 200px;
 }
 
+.card {
+    background-color: var(--forecast-card);
+    color: var(--primary);
+}
+
