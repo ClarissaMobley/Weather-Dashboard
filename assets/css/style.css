@@ -43,4 +43,7 @@ body {
     background-color: var(--forecast-card);
     color: var(--primary);
 }
-
+footer {
+    text-align: center;
+    font-weight: bold;
+}

@@ -37,9 +37,16 @@ const getWeather = function(city) {
 
 const displayWeather = function(data, city) {
     const temperatureFahrenheit = ((data.main.temp - 273.15) * 9) / 5 + 32;
+    const iconCode = data.weather[0].icon;
+    const iconURL = `http://openweathermap.org/img/wn/${iconCode}.png`;
+
+    const icon = document.createElement("img");
+    icon.src = iconURL;
+    icon.alt = "Weather Icon";
 
     currentForecast.innerHTML = `
           <h1 class="fw-bold">${data.name} (${currentDate})</h1>
+          <div>${icon.outerHTML}</div>
           </br>temp: ${temperatureFahrenheit.toFixed(2)}°F
           </br>wind: ${data.wind.speed} MPH
           </br>humidity: ${data.main.humidity}%`;
@@ -55,6 +62,8 @@ const displayForecast = function(data) {
         const forecast = data.list[i * 8];
         const date = new Date(forecast.dt * 1000);
         const temperatureFahrenheit = ((forecast.main.temp - 273.15) * 9) / 5 + 32;
+        const iconCode = forecast.weather[0].icon;
+        const iconURL = `http://openweathermap.org/img/wn/${iconCode}.png`;
 
         const card = document.createElement("div");
         card.classList.add("card", "m-3");
@@ -65,11 +74,11 @@ const displayForecast = function(data) {
 
         const cardTitle = document.createElement("h5");
         cardTitle.classList.add("card-title");
-        cardTitle.textContent = date.toLocaleDateString("en-US", { weekday: "long" });
+        cardTitle.textContent = date.toLocaleDateString("en-US", { month: "numeric", day: "numeric", year: "numeric" });
 
-        const cardSubtitle = document.createElement("h6");
-        cardSubtitle.classList.add("card-subtitle", "mb-2");
-        cardSubtitle.textContent = date.toLocaleDateString("en-US", { month: "numeric", day: "numeric", year: "numeric" });
+        const icon = document.createElement("img");
+        icon.src = iconURL;
+        icon.alt = "Weather Icon";
 
         const cardText1 = document.createElement("p");
         cardText1.classList.add("card-text");
@@ -84,7 +93,7 @@ const displayForecast = function(data) {
         cardText3.textContent = `Humidity: ${forecast.main.humidity}%`;
 
         cardBody.appendChild(cardTitle);
-        cardBody.appendChild(cardSubtitle);
+        cardBody.appendChild(icon);
         cardBody.appendChild(cardText1);
         cardBody.appendChild(cardText2);
         cardBody.appendChild(cardText3);
