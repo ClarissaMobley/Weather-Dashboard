@@ -19,7 +19,7 @@ const loadDefaultForecast = () => {
   getWeather("Atlanta");
 };
 
-  //Search button click event
+  //Search button handler event
   const searchButtonHandler = function (event) {
   event.preventDefault();
   const city = userSearch.value.trim();

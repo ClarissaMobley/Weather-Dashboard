@@ -1,3 +1,4 @@
+<div id="readme-top"></div>
 <h3 align="center">Weather Dashboard</h3>
 
   <p align="center">
