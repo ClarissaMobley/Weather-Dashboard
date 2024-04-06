@@ -47,7 +47,6 @@ const displayWeather = function(data, city) {
     getForecast(city);
 };
 
-
 const displayForecast = function(data) {
     const forecastCards = document.querySelector(".forecastCards");
     forecastCards.innerHTML = "";
@@ -95,4 +94,20 @@ const displayForecast = function(data) {
     }
 };
 
-
+const getForecast = function (city) {
+    const forecastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
+  
+    fetch(forecastWeatherUrl)
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (data) {
+            displayForecast(data);
+          });
+        } else {
+          alert("Error: " + response.statusText);
+        }
+      })
+      .catch(function () {
+        alert("Unable to connect to OpenWeather");
+      });
+  };
