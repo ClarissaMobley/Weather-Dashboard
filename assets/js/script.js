@@ -111,3 +111,13 @@ const getForecast = function (city) {
         alert("Unable to connect to OpenWeather");
       });
   };
+
+  searchButton.addEventListener("click", searchButtonHandler);
+
+  const cityButtons = document.querySelectorAll(".city-btn");
+  cityButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+    const city = this.textContent.trim();
+    getWeather(city);
+  });
+});
