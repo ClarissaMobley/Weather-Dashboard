@@ -12,6 +12,12 @@ function getCities() {
 }
 
 // Saves new city and updates list
+function saveCity(city) {
+  const cities = getCities();
+  cities.unshift(city);
+  localStorage.setItem("cities", JSON.stringify(cities));
+  searchButton(city);
+}
 
 
 
