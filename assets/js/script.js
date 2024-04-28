@@ -30,13 +30,30 @@ function fetchCityData(city) {
   })
 }
 
+const displayWeather = (data) => {
+  let currentDate = new Date().toLocaleDateString();
+  const temperatureFahrenheit = ((data.main.temp - 273.15) * 9) /5 + 32;
+  const iconCode = data.weather[0].icon;
+  const iconURL = `http://openweathermap.org/img/wn/${iconCode}.png`;
+
+  const icon = document.createElement("img");
+  icon.src = iconURL;
+  icon.alt = "Weather Icon";
+
+  currentForecast.innerHTML = `
+  <h1 class ="fw-bold m-2">${data.name} (${currentDate})</h1>
+  <div>${icon.outerHTML}</div>
+  <p class ="m-2>temp: ${temperatureFahrenheit.toFixed(2)}°F
+  </br>wind: ${data.wind.speed} MPH
+  </br>humidity: ${data.main.humidity}%</p>`
+}
+
 // Add city button to search history
 function addCityButton(city) {
   const button = document.createElement('button');
   button.textContent = city;
   button.className = 'btn m-2 btn-primary city-btn';
   button.addEventListener('click', () => fetchCityData(city));
-  searchHistory.appendChild(button);
 }
 
 // Add event listener to search button
@@ -46,6 +63,7 @@ searchButton.addEventListener("click", (event) => {
   if (city) {
     fetchCityData(city);
     userSearch.value = '';
+    searchHistory.appendChild(button);
   } else {
     userSearch.innerHTML = '<span style="color:red">Please enter city name</span>';
   }
