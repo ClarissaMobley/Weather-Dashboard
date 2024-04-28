@@ -35,9 +35,9 @@ const displayWeather = (data) => {
   icon.alt = "Weather Icon";
 
   currentForecast.innerHTML = `
-  <h1 class ="fw-bold m-2">${data.name} (${currentDate})</h1>
+  <h1 class="fw-bold m-2">${data.name} (${currentDate})</h1>
   <div>${icon.outerHTML}</div>
-  <p class ="m-2>temp: ${temperatureFahrenheit.toFixed(2)}°F
+  <p class="m-2">temp: ${temperatureFahrenheit.toFixed(2)}°F
   </br>wind: ${data.wind.speed} MPH
   </br>humidity: ${data.main.humidity}%</p>`;
 };
