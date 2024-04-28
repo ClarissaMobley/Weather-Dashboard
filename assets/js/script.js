@@ -5,12 +5,13 @@ const currentForecast = document.querySelector(".current-forecast");
 // API Key
 const apiKey = "530886ee7df4842ed6caba305a22369e";
 
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
+
 // Retrieves cities from local storage
 function getCities() {
-  const cities = localStorage.getItem('cities');
-  return cities ? JSON.parse(cities) : [];
+  const cities = JSON.parse(localStorage.getItem('cities')) || [];
+  return cities;
 }
-
 // Saves new city and updates list
 function saveCity(city) {
   const cities = getCities();
@@ -19,7 +20,22 @@ function saveCity(city) {
   searchButton(city);
 }
 
+// Fetch city
+function fetchCityData(city) {
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
 
+    })
+}
+
+// const searchButtonHandler = (e) => {
+//   event.preventDefault();
+//   const city = userSearch.value.trim();
+//   if (city) {
+//     for (let i = 0; i < 8 )
+//   }  
+// }
 
 
 
