@@ -19,7 +19,7 @@ function fetchCityData(city) {
     .then((data) => {
       displayWeather(data);
       saveSearch(city);
-      getForecast(city);
+      getForecast(city)
     })
     .catch((error) => {
       console.log("Error fetching data: " + error);
@@ -59,6 +59,7 @@ const displayWeather = (data) => {
   </br>wind: ${data.wind.speed} MPH
   </br>humidity: ${data.main.humidity}%</p>`;
 };
+
 
 // Display five day forecast on cards
 const displayForecast = function (data) {
@@ -106,7 +107,10 @@ function saveSearch(city) {
 // Function to capitalize first letter of the city on button
 function capitalize(str) {
   if (!str) return str;
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  return str
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
 // Add city button to search history and make sure duplicates don't show up
