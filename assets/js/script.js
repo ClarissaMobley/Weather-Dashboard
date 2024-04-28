@@ -60,7 +60,28 @@ const getForecast = function (city) {
 
 // Display five day forecast on cards
 const displayForecast = function(data) {
+  forecastCards.innerHTML = '';
 
+  for (let i = 0; i < 5; i++) {
+    const forecast = data.list[i * 8];
+    const date = new Date(forecast.dt * 1000);
+    const temperatureFahrenheit = ((forecast.main.temp - 273.15) * 9) / 5 + 32;
+    const iconCode = forecast.weather[0].icon;
+    const iconURL = `http://openweathermap.org/img/wn/${iconCode}.png`;
+
+    const card = document.createElement('div');
+    card.classList.add("card", "m-3");
+    card.innerHTML = `
+      <h5>${date.toLocaleDateString("en-US", {
+      month: "numeric", day: "numeric", year: "numeric"
+    })}</h5> 
+    <div>${icon.outerHTML}</div>
+    <p>Temp: ${temperatureFahrenheit.toFixed(2)}°F</p>
+    <p>Wind: ${forecast.wind.speed} MPH</p>
+    <p>Humidity: ${forecast.main.humidity}%`;
+
+    forecastCards.appendChild(card);
+  }
 }
 
 // Save search to local storage and add to search history
