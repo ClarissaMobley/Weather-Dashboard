@@ -1,3 +1,4 @@
+// Select DOM elements
 const userSearch = document.querySelector("#city-search");
 const searchButton = document.querySelector(".search-btn");
 const currentForecast = document.querySelector(".current-forecast");
@@ -5,52 +6,48 @@ const currentForecast = document.querySelector(".current-forecast");
 // API Key
 const apiKey = "530886ee7df4842ed6caba305a22369e";
 
-const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
-
-// Retrieves cities from local storage
+// Function to retrieve cities from local storage
 function getCities() {
-  const cities = JSON.parse(localStorage.getItem('cities')) || [];
-  return cities;
+  return JSON.parse(localStorage.getItem("cities")) || [];
 }
-// Saves new city and updates list
+
+// Function to save a new city to local storage
 function saveCity(city) {
   const cities = getCities();
   cities.unshift(city);
   localStorage.setItem("cities", JSON.stringify(cities));
-  searchButton(city);
 }
 
-// Fetch city
+// Function to fetch city weather data
 function fetchCityData(city) {
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
   fetch(url)
-    .then(response => response.json())
-    .then(data => {
-
+    .then((response) => response.json())
+    .then((data) => {
+      // Display data
+      console.log(data); 
+      saveCity(city);
     })
+    .catch((error) => {
+      console.error("Error fetching data: " + error);
+      alert("Failed to retrieve data for " + city);
+    });
 }
+
+// Event listener for the search button
+searchButton.addEventListener("click", () => {
+  event.preventDefault();
+  const city = userSearch.value;
+  if (city) fetchCityData(city); 
+});
 
 // const searchButtonHandler = (e) => {
 //   event.preventDefault();
 //   const city = userSearch.value.trim();
 //   if (city) {
 //     for (let i = 0; i < 8 )
-//   }  
+//   }
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const userSearch = document.querySelector("#city-search");
 // const searchButton = document.querySelector(".search-btn");
@@ -215,4 +212,3 @@ function fetchCityData(city) {
 //         getWeather(city);
 //   });
 // });
-
