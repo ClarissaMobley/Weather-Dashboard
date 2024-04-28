@@ -1,48 +1,38 @@
-// Select DOM elements
+// DOM Elements
 const userSearch = document.querySelector("#city-search");
-const searchButton = document.querySelector(".search-btn");
+const searchButton = document.querySelector(".search-button");
 const currentForecast = document.querySelector(".current-forecast");
+const searchHistory = document.querySelector(".search-history");
+const errorMessage = document.querySelector(".error-message");
 
-// API Key
 const apiKey = "530886ee7df4842ed6caba305a22369e";
 
-// Function to retrieve cities from local storage
-function getCities() {
-  return JSON.parse(localStorage.getItem("cities")) || [];
-}
-
-// Function to save a new city to local storage
-function saveCity(city) {
-  const cities = getCities();
-  cities.unshift(city);
-  localStorage.setItem("cities", JSON.stringify(cities));
-}
-
-// Function to fetch city weather data
 function fetchCityData(city) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
   fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      // Display data
-      console.log(data); 
-      saveCity(city);
-    })
-    .catch((error) => {
-      console.error("Error fetching data: " + error);
-      alert("Failed to retrieve data for " + city);
-    });
+  .then(response => response.json())
+  .then(data => {
+    displayWeather(data);
+    saveSearch(city);
+  })
+  .catch(error => {
+    console.log("Error fetching data: " + error);
+    alert('Failed to retrieve data for ' + city);
+  })
 }
 
-// Event listener for the search button
-searchButton.addEventListener("click", (event) => {
-  event.preventDefault();
-  const city = userSearch.value;
-  if (city) {
-    fetchCityData(city);
-    userSearch.value ='';
+function saveSearch(city) {
+  const cities = JSON.parse(localStorage.getItem("cities")) || [];
+  if (!cities.includes(city)) {
+    cities.unshift(city);
+    localStorage.setItem("cities", JSON.stringify(cities));
+    addCityButton(city);
   }
-});
+}
+
+
+
+
 
 // const searchButtonHandler = (e) => {
 //   event.preventDefault();
