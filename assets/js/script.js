@@ -3,6 +3,7 @@ const userSearch = document.querySelector("#city-search");
 const searchButton = document.querySelector(".search-btn");
 const currentForecast = document.querySelector(".current-forecast");
 const searchHistory = document.querySelector(".search-history");
+const forecastCards = document.querySelector("forecastCards")
 
 // API Key
 const apiKey = "530886ee7df4842ed6caba305a22369e";
@@ -41,6 +42,26 @@ const displayWeather = (data) => {
   </br>wind: ${data.wind.speed} MPH
   </br>humidity: ${data.main.humidity}%</p>`;
 };
+
+// fetch for five day forecast
+const getForecast = function (city) {
+  const forecastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
+
+  fetch(forecastWeatherUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      displayForecast(data);
+    })
+    .catch((error) => {
+      console.log("Error fetching data: " + error);
+      alert("Failed to retrieve data for " + city);
+    });
+};
+
+// Display five day forecast on cards
+const displayForecast = function(data) {
+
+}
 
 // Save search to local storage and add to search history
 function saveSearch(city) {
@@ -93,7 +114,6 @@ function loadCities() {
     addCityButton(city);
   });
 }
-
 
 // const searchButtonHandler = (e) => {
 //   event.preventDefault();
@@ -186,7 +206,6 @@ function loadCities() {
 //     const temperatureFahrenheit = ((forecast.main.temp - 273.15) * 9) / 5 + 32;
 //     const iconCode = forecast.weather[0].icon;
 //     const iconURL = `http://openweathermap.org/img/wn/${iconCode}.png`;
-
 //     const card = document.createElement("div");
 //     card.classList.add("card", "m-3");
 //     card.style.width = "10rem";
