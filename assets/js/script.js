@@ -19,7 +19,7 @@ function fetchCityData(city) {
     .then((data) => {
       displayWeather(data);
       saveSearch(city);
-      getForecast(city)
+      getForecast(city);
     })
     .catch((error) => {
       console.log("Error fetching data: " + error);
@@ -60,7 +60,6 @@ const displayWeather = (data) => {
   </br>humidity: ${data.main.humidity}%</p>`;
 };
 
-
 // Display five day forecast on cards
 const displayForecast = function (data) {
   forecastCards.innerHTML = "";
@@ -86,9 +85,9 @@ const displayForecast = function (data) {
         year: "numeric",
       })}</h5> 
     <div>${icon.outerHTML}</div>
-    <p>Temp: ${temperatureFahrenheit.toFixed(2)}°F</p>
-    <p>Wind: ${forecast.wind.speed} MPH</p>
-    <p>Humidity: ${forecast.main.humidity}%`;
+    <p>Temp: </br>${temperatureFahrenheit.toFixed(2)}°F</p>
+    <p>Wind: </br>${forecast.wind.speed} MPH</p>
+    <p>Humidity: </br>${forecast.main.humidity}%`;
 
     forecastCards.appendChild(card);
   }
@@ -124,8 +123,11 @@ function addCityButton(city) {
     button.textContent = capitalize(city);
     button.className = "btn m-2 btn-primary city-btn";
     button.setAttribute("data-city", city);
-    button.addEventListener("click", () => fetchCityData(city));
-    searchHistory.appendChild(button);
+    button.addEventListener("click", () => {
+      fetchCityData(city);
+      getForecast(city);
+    });
+    searchHistory.prepend(button);
   }
 }
 
