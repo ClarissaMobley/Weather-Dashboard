@@ -42,7 +42,7 @@ const displayWeather = (data) => {
   </br>humidity: ${data.main.humidity}%</p>`;
 };
 
-// // Save search to local storage and add to search history
+// Save search to local storage and add to search history
 function saveSearch(city) {
   const cities = JSON.parse(localStorage.getItem("cities")) || [];
   if (!cities.includes(city)) {
@@ -52,7 +52,13 @@ function saveSearch(city) {
   }
 }
 
-// // Add city button to search history and make sure duplicates don't show up
+// Function to capitalize first letter of the city on button
+function capitalize(str) {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// Add city button to search history and make sure duplicates don't show up
 function addCityButton(city) {
   const existingButton = Array.from(
     searchHistory.querySelectorAll("button")
@@ -60,7 +66,7 @@ function addCityButton(city) {
 
   if (!existingButton) {
     const button = document.createElement("button");
-    button.textContent = city;
+    button.textContent = capitalize(city);
     button.className = "btn m-2 btn-primary city-btn";
     button.setAttribute("data-city", city);
     button.addEventListener("click", () => fetchCityData(city));
@@ -68,7 +74,7 @@ function addCityButton(city) {
   }
 }
 
-// // Add event listener to search button
+// Add event listener to search button
 searchButton.addEventListener("click", (event) => {
   event.preventDefault();
   const city = userSearch.value.trim();
