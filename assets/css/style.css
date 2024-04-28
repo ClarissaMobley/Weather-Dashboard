@@ -43,6 +43,7 @@ body {
 .card {
     background-color: var(--forecast-card);
     color: var(--primary);
+    width: 10rem;
 }
 footer {
     text-align: center;

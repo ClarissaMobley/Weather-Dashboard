@@ -11,6 +11,7 @@ const apiKey = "530886ee7df4842ed6caba305a22369e";
 // Load city buttons from local storage
 loadCities();
 
+// Fetch city and weather data
 function fetchCityData(city) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
   fetch(url)
@@ -25,6 +26,21 @@ function fetchCityData(city) {
       alert("Failed to retrieve data for " + city);
     });
 }
+
+// fetch for five day forecast
+const getForecast = (city) => {
+  const forecastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
+
+  fetch(forecastWeatherUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      displayForecast(data);
+    })
+    .catch((error) => {
+      console.log("Error fetching data: " + error);
+      alert("Failed to retrieve data for " + city);
+    });
+};
 
 const displayWeather = (data) => {
   let currentDate = new Date().toLocaleDateString();
@@ -44,20 +60,6 @@ const displayWeather = (data) => {
   </br>humidity: ${data.main.humidity}%</p>`;
 };
 
-// fetch for five day forecast
-const getForecast = (city) => {
-  const forecastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
-
-  fetch(forecastWeatherUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      displayForecast(data);
-    })
-    .catch((error) => {
-      console.log("Error fetching data: " + error);
-      alert("Failed to retrieve data for " + city);
-    });
-};
 
 // Display five day forecast on cards
 const displayForecast = function (data) {
