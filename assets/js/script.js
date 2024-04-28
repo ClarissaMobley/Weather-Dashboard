@@ -1,10 +1,20 @@
 // DOM Elements
 const userSearch = document.querySelector("#city-search");
-const searchButton = document.querySelector(".search-button");
+const searchButton = document.querySelector(".search-btn");
 const currentForecast = document.querySelector(".current-forecast");
 const searchHistory = document.querySelector(".search-history");
 
 const apiKey = "530886ee7df4842ed6caba305a22369e";
+
+// Save search to local storage and add to search history
+function saveSearch(city) {
+  const cities = JSON.parse(localStorage.getItem("cities")) || [];
+  if (!cities.includes(city)) {
+    cities.unshift(city);
+    localStorage.setItem("cities", JSON.stringify(cities));
+    addCityButton(city);
+  }
+}
 
 function fetchCityData(city) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
@@ -20,16 +30,6 @@ function fetchCityData(city) {
   })
 }
 
-// Save search to local storage and add to search history
-function saveSearch(city) {
-  const cities = JSON.parse(localStorage.getItem("cities")) || [];
-  if (!cities.includes(city)) {
-    cities.unshift(city);
-    localStorage.setItem("cities", JSON.stringify(cities));
-    addCityButton(city);
-  }
-}
-
 // Add city button to search history
 function addCityButton(city) {
   const button = document.createElement('button');
@@ -40,7 +40,7 @@ function addCityButton(city) {
 }
 
 // Add event listener to search button
-searchButton.addEventListener('click', (event) => {
+searchButton.addEventListener("click", (event) => {
   event.preventDefault();
   const city = userSearch.value.trim();
   if (city) {
