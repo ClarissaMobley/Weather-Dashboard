@@ -3,7 +3,6 @@ const userSearch = document.querySelector("#city-search");
 const searchButton = document.querySelector(".search-button");
 const currentForecast = document.querySelector(".current-forecast");
 const searchHistory = document.querySelector(".search-history");
-const errorMessage = document.querySelector(".error-message");
 
 const apiKey = "530886ee7df4842ed6caba305a22369e";
 
@@ -48,9 +47,11 @@ searchButton.addEventListener('click', (event) => {
     fetchCityData(city);
     userSearch.value = '';
   } else {
-    errorMessage.textContent = 'Please enter city name';
+    userSearch.innerHTML = '<span style="color:red">Please enter city name</span>';
   }
 });
+
+
 
 
 
