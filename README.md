@@ -43,12 +43,12 @@ This weather dashboard uses a server-side API to get the current and upcoming we
 <!-- LINK -->
 ## Link
 
-[Task Board](https://clarissamobley.github.io/Task-Board/)
+[Weather Dashboard Deployed Link](https://clarissamobley.github.io/Weather-Dashboard/)
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-![taskboardGif](./assets/images/CPT2404052155-1450x739.gif)
+![weatherGif](./assets/images/CPT2404281407-1510x732.gif)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
