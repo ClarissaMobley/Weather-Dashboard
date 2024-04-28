@@ -4,35 +4,29 @@ const searchButton = document.querySelector(".search-btn");
 const currentForecast = document.querySelector(".current-forecast");
 const searchHistory = document.querySelector(".search-history");
 
+// API Key
 const apiKey = "530886ee7df4842ed6caba305a22369e";
 
-// Save search to local storage and add to search history
-function saveSearch(city) {
-  const cities = JSON.parse(localStorage.getItem("cities")) || [];
-  if (!cities.includes(city)) {
-    cities.unshift(city);
-    localStorage.setItem("cities", JSON.stringify(cities));
-    addCityButton(city);
-  }
-}
+// Load city buttons from local storage
+loadCities();
 
 function fetchCityData(city) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
   fetch(url)
-  .then(response => response.json())
-  .then(data => {
-    displayWeather(data);
-    saveSearch(city);
-  })
-  .catch(error => {
-    console.log("Error fetching data: " + error);
-    alert('Failed to retrieve data for ' + city);
-  })
+    .then((response) => response.json())
+    .then((data) => {
+      displayWeather(data);
+      saveSearch(city);
+    })
+    .catch((error) => {
+      console.log("Error fetching data: " + error);
+      alert("Failed to retrieve data for " + city);
+    });
 }
 
 const displayWeather = (data) => {
   let currentDate = new Date().toLocaleDateString();
-  const temperatureFahrenheit = ((data.main.temp - 273.15) * 9) /5 + 32;
+  const temperatureFahrenheit = ((data.main.temp - 273.15) * 9) / 5 + 32;
   const iconCode = data.weather[0].icon;
   const iconURL = `http://openweathermap.org/img/wn/${iconCode}.png`;
 
@@ -45,35 +39,54 @@ const displayWeather = (data) => {
   <div>${icon.outerHTML}</div>
   <p class ="m-2>temp: ${temperatureFahrenheit.toFixed(2)}°F
   </br>wind: ${data.wind.speed} MPH
-  </br>humidity: ${data.main.humidity}%</p>`
+  </br>humidity: ${data.main.humidity}%</p>`;
+};
+
+// // Save search to local storage and add to search history
+function saveSearch(city) {
+  const cities = JSON.parse(localStorage.getItem("cities")) || [];
+  if (!cities.includes(city)) {
+    cities.unshift(city);
+    localStorage.setItem("cities", JSON.stringify(cities));
+    addCityButton(city);
+  }
 }
 
-// Add city button to search history
+// // Add city button to search history and make sure duplicates don't show up
 function addCityButton(city) {
-  const button = document.createElement('button');
-  button.textContent = city;
-  button.className = 'btn m-2 btn-primary city-btn';
-  button.addEventListener('click', () => fetchCityData(city));
+  const existingButton = Array.from(
+    searchHistory.querySelectorAll("button")
+  ).find((btn) => btn.textContent === city);
+
+  if (!existingButton) {
+    const button = document.createElement("button");
+    button.textContent = city;
+    button.className = "btn m-2 btn-primary city-btn";
+    button.setAttribute("data-city", city);
+    button.addEventListener("click", () => fetchCityData(city));
+    searchHistory.appendChild(button);
+  }
 }
 
-// Add event listener to search button
+// // Add event listener to search button
 searchButton.addEventListener("click", (event) => {
   event.preventDefault();
   const city = userSearch.value.trim();
   if (city) {
     fetchCityData(city);
-    userSearch.value = '';
-    searchHistory.appendChild(button);
+    userSearch.value = "";
   } else {
-    userSearch.innerHTML = '<span style="color:red">Please enter city name</span>';
+    alert("Please enter a city");
   }
 });
 
-
-
-
-
-
+// Function to load cities from local storage and create buttons
+function loadCities() {
+  const cities = JSON.parse(localStorage.getItem("cities")) || [];
+  cities.forEach((city) => {
+    addCityButton(city);
+  });
+}
 
 
 // const searchButtonHandler = (e) => {
