@@ -35,10 +35,13 @@ function fetchCityData(city) {
 }
 
 // Event listener for the search button
-searchButton.addEventListener("click", () => {
+searchButton.addEventListener("click", (event) => {
   event.preventDefault();
   const city = userSearch.value;
-  if (city) fetchCityData(city); 
+  if (city) {
+    fetchCityData(city);
+    userSearch.value ='';
+  }
 });
 
 // const searchButtonHandler = (e) => {
