@@ -21,6 +21,7 @@ function fetchCityData(city) {
   })
 }
 
+// Save search to local storage and add to search history
 function saveSearch(city) {
   const cities = JSON.parse(localStorage.getItem("cities")) || [];
   if (!cities.includes(city)) {
@@ -29,6 +30,18 @@ function saveSearch(city) {
     addCityButton(city);
   }
 }
+
+// Add city button to search history
+function addCityButton(city) {
+  const button = document.createElement('button');
+  button.textContent = city;
+  button.className = 'btn m-2 btn-primary city-btn';
+  button.addEventListener('click', () => fetchCityData(city));
+  searchHistory.appendChild(button);
+}
+
+//
+
 
 
 
