@@ -3,7 +3,7 @@ const userSearch = document.querySelector("#city-search");
 const searchButton = document.querySelector(".search-btn");
 const currentForecast = document.querySelector(".current-forecast");
 const searchHistory = document.querySelector(".search-history");
-const forecastCards = document.querySelector("forecastCards")
+const forecastCards = document.querySelector(".forecastCards");
 
 // API Key
 const apiKey = "530886ee7df4842ed6caba305a22369e";
@@ -18,6 +18,7 @@ function fetchCityData(city) {
     .then((data) => {
       displayWeather(data);
       saveSearch(city);
+      getForecast(city)
     })
     .catch((error) => {
       console.log("Error fetching data: " + error);
@@ -44,7 +45,7 @@ const displayWeather = (data) => {
 };
 
 // fetch for five day forecast
-const getForecast = function (city) {
+const getForecast = (city) => {
   const forecastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
 
   fetch(forecastWeatherUrl)
@@ -59,8 +60,9 @@ const getForecast = function (city) {
 };
 
 // Display five day forecast on cards
-const displayForecast = function(data) {
-  forecastCards.innerHTML = '';
+const displayForecast = function (data) {
+  console.log(data);
+  forecastCards.innerHTML = "";
 
   for (let i = 0; i < 5; i++) {
     const forecast = data.list[i * 8];
@@ -69,12 +71,18 @@ const displayForecast = function(data) {
     const iconCode = forecast.weather[0].icon;
     const iconURL = `http://openweathermap.org/img/wn/${iconCode}.png`;
 
-    const card = document.createElement('div');
+    const icon = document.createElement("img");
+    icon.src = iconURL;
+    icon.alt = "Weather icon";
+
+    const card = document.createElement("div");
     card.classList.add("card", "m-3");
     card.innerHTML = `
       <h5>${date.toLocaleDateString("en-US", {
-      month: "numeric", day: "numeric", year: "numeric"
-    })}</h5> 
+        month: "numeric",
+        day: "numeric",
+        year: "numeric",
+      })}</h5> 
     <div>${icon.outerHTML}</div>
     <p>Temp: ${temperatureFahrenheit.toFixed(2)}°F</p>
     <p>Wind: ${forecast.wind.speed} MPH</p>
@@ -82,7 +90,7 @@ const displayForecast = function(data) {
 
     forecastCards.appendChild(card);
   }
-}
+};
 
 // Save search to local storage and add to search history
 function saveSearch(city) {
@@ -122,6 +130,7 @@ searchButton.addEventListener("click", (event) => {
   const city = userSearch.value.trim();
   if (city) {
     fetchCityData(city);
+    getForecast(city);
     userSearch.value = "";
   } else {
     alert("Please enter a city");
