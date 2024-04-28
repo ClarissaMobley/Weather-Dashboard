@@ -40,7 +40,17 @@ function addCityButton(city) {
   searchHistory.appendChild(button);
 }
 
-//
+// Add event listener to search button
+searchButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  const city = userSearch.value.trim();
+  if (city) {
+    fetchCityData(city);
+    userSearch.value = '';
+  } else {
+    errorMessage.textContent = 'Please enter city name';
+  }
+});
 
 
 
