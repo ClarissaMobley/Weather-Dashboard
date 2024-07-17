@@ -5,9 +5,6 @@ const currentForecast = document.querySelector(".current-forecast");
 const searchHistory = document.querySelector(".search-history");
 const forecastCards = document.querySelector(".forecastCards");
 
-// API Key
-const apiKey = "530886ee7df4842ed6caba305a22369e";
-
 // Load city buttons from local storage
 loadCities();
 
